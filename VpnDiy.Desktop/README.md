@@ -3,7 +3,7 @@
 This tool is to start, stop and connect AWS EC2 servers.
 And after restarting an EC2 server, restart Shadowsocks.
 
-![AWS EC2 Manager for Windows](https://github.com/juwikuang/AwsEc2_Shadowsocks_Manager/blob/master/Resources/screenshot.png?raw=true)
+![AWS EC2 Manager for Windows](https://github.com/juwikuang/VPN_DIY/blob/master/VpnDiy.Desktop/Resources/screenshot.png?raw=true)
 
 # AWS CLI
 I suppose you already have an AWS account. 
