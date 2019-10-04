@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace VpnDiy
 {
@@ -22,7 +19,7 @@ namespace VpnDiy
         {
             get
             {
-                if(_default == null)
+                if (_default == null)
                 {
                     _default = Load();
                 }
@@ -30,10 +27,7 @@ namespace VpnDiy
             }
         }
 
-        private Config()
-        {
-
-        }
+        private Config() { }
 
         public void Save()
         {

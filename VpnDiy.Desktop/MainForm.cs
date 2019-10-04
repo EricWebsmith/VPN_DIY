@@ -10,7 +10,6 @@ namespace VpnDiy.Desktop
 
         private List<Server> servers = null;
         private Dictionary<string, ServerExtension> extenstions = new Dictionary<string, ServerExtension>();
-        private Dictionary<string, int> col_name_index_dict = new Dictionary<string, int>();
 
         public MainForm()
         {
@@ -24,10 +23,6 @@ namespace VpnDiy.Desktop
             this.pemTextBox.Text = config.EC2PemFilename;
             this.shadowsocksFolderTextBox.Text = config.ShadowsocksWorkingFolder;
 
-            foreach(DataGridViewColumn col in dataGridView1.Columns)
-            {
-                col_name_index_dict[col.Name] = col.Index;
-            }
             Refresh();
             timer1.Start();
         }
@@ -40,27 +35,26 @@ namespace VpnDiy.Desktop
             if (senderGrid.Columns[e.ColumnIndex] is DataGridViewButtonColumn &&
                 e.RowIndex >= 0)
             {
-                var copy_cell = senderGrid.Rows[e.RowIndex].Cells["CopyIP"] as DataGridViewButtonCell;
+                //var copy_cell = senderGrid.Rows[e.RowIndex].Cells["CopyIP"] as DataGridViewButtonCell;
                 var restart_cell = senderGrid.Rows[e.RowIndex].Cells["RestartSS"] as DataGridViewButtonCell;
                 var server = servers[e.RowIndex];
                 var extension = extenstions[server.Id];
 
-                if (senderGrid.Columns[e.ColumnIndex].Name == "CopyIP")
-                {
-                    if (!string.IsNullOrWhiteSpace(servers[e.RowIndex].IP))
-                    {
-                        Clipboard.SetText(servers[e.RowIndex].IP);
-                        extension.IpCopied = true;
+                //if (senderGrid.Columns[e.ColumnIndex].Name == "CopyIP")
+                //{
+                //    if (!string.IsNullOrWhiteSpace(servers[e.RowIndex].IP))
+                //    {
+                //        Clipboard.SetText(servers[e.RowIndex].IP);
+                //        extension.IpCopied = true;
                         
-                        copy_cell.Value = "Copied";
-                    }
-                }
+                //        copy_cell.Value = "Copied";
+                //    }
+                //}
 
                 if (senderGrid.Columns[e.ColumnIndex].Name == "RestartSS")
                 {
                     if (!string.IsNullOrWhiteSpace(servers[e.RowIndex].IP))
                     {
-                        Clipboard.SetText(servers[e.RowIndex].IP);
                         ShadowsocksUtility.Restart(server.IP);
                         extension.ShadowsocksRestarted = true;
                         restart_cell.Value = "Restarted";
@@ -111,8 +105,8 @@ namespace VpnDiy.Desktop
             for(int i=0;i< servers.Count;i++)
             {
                 var id = servers[i].Id;
-                var copy_cell = dataGridView1.Rows[i].Cells["CopyIP"] as DataGridViewButtonCell;
-                copy_cell.Value = extenstions[id].IpCopied?"Copied":"";
+                //var copy_cell = dataGridView1.Rows[i].Cells["CopyIP"] as DataGridViewButtonCell;
+                //copy_cell.Value = extenstions[id].IpCopied?"Copied":"";
                 var restart_cell = dataGridView1.Rows[i].Cells["RestartSS"] as DataGridViewButtonCell;
                 restart_cell.Value = extenstions[id].IpCopied ? "Restarted" : "";
             }

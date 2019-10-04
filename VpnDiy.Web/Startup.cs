@@ -34,7 +34,6 @@ namespace VpnDiy.Web
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.KnownProxies.Add(IPAddress.Parse("127.0.0.1"));
-                options.KnownProxies.Add(IPAddress.Parse("35.235.69.87"));
             });
         }
 

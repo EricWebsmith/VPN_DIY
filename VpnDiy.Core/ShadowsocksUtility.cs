@@ -1,12 +1,12 @@
 ﻿using System.Diagnostics;
 using System.IO;
 using System.Text.Json;
+using System.Linq;
 
 namespace VpnDiy
 {
     public static class ShadowsocksUtility
     {
-        public static string WorkingFolder { get; set; }
 
         public static void Restart(string ip)
         {
@@ -29,27 +29,25 @@ namespace VpnDiy
 
             JsonDocument jdoc = null;
             string jsonString = string.Empty;
+            string oldIp = string.Empty;
 
-            using (StreamReader reader = new StreamReader(System.IO.Path.Combine(WorkingFolder, "gui-config.json")))
+            using (StreamReader reader = new StreamReader(System.IO.Path.Combine(Config.Default.ShadowsocksWorkingFolder, "gui-config.json")))
             {
                 jsonString = reader.ReadToEnd();
                 jdoc = JsonDocument.Parse(jsonString, options);
-                
+                oldIp = jdoc.RootElement.GetProperty("configs").EnumerateArray().First().GetProperty("server").GetString();
+                jsonString = jsonString.Replace(oldIp, ip);
             }
-
-            var oldIp=jdoc.RootElement.GetProperty("configs").EnumerateArray().Current.GetProperty("server").GetString();
-            jsonString=jsonString.Replace(oldIp, ip);
-
-
-            using (StreamWriter writer = new StreamWriter(System.IO.Path.Combine(WorkingFolder, "gui-config.json")))
+            
+            using (StreamWriter writer = new StreamWriter(System.IO.Path.Combine(Config.Default.ShadowsocksWorkingFolder, "gui-config.json")))
             {
                 writer.Write(jsonString);
             }
 
             //step 3 start shadowsocks
             var shadowsocksInfo = new ProcessStartInfo();
-            shadowsocksInfo.WorkingDirectory = WorkingFolder;
-            shadowsocksInfo.FileName = "Shadowsocks.exe";
+            shadowsocksInfo.WorkingDirectory = Config.Default.ShadowsocksWorkingFolder;
+            shadowsocksInfo.FileName = System.IO.Path.Combine(Config.Default.ShadowsocksWorkingFolder, "Shadowsocks.exe");
             shadowsocksInfo.CreateNoWindow = true;
             var shadowsocks = new Process();
             shadowsocks.StartInfo = shadowsocksInfo;

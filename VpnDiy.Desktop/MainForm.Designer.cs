@@ -34,7 +34,7 @@
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.stateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.iPDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CopyIP = new System.Windows.Forms.DataGridViewButtonColumn();
+            //this.CopyIP = new System.Windows.Forms.DataGridViewButtonColumn();
             this.RestartSS = new System.Windows.Forms.DataGridViewButtonColumn();
             this.launchTimeDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Start = new System.Windows.Forms.DataGridViewButtonColumn();
@@ -76,7 +76,7 @@
             this.nameDataGridViewTextBoxColumn,
             this.stateDataGridViewTextBoxColumn,
             this.iPDataGridViewTextBoxColumn,
-            this.CopyIP,
+            //this.CopyIP,
             this.RestartSS,
             this.launchTimeDataGridViewTextBoxColumn,
             this.Start,
@@ -116,11 +116,11 @@
             // 
             // CopyIP
             // 
-            this.CopyIP.Frozen = true;
-            this.CopyIP.HeaderText = "Copy IP";
-            this.CopyIP.Name = "CopyIP";
-            this.CopyIP.Text = "Copy IP";
-            this.CopyIP.Width = 50;
+            //this.CopyIP.Frozen = true;
+            //this.CopyIP.HeaderText = "Copy IP";
+            //this.CopyIP.Name = "CopyIP";
+            //this.CopyIP.Text = "Copy IP";
+            //this.CopyIP.Width = 50;
             // 
             // RestartSS
             // 
@@ -383,7 +383,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn stateDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn iPDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewButtonColumn CopyIP;
+        //private System.Windows.Forms.DataGridViewButtonColumn CopyIP;
         private System.Windows.Forms.DataGridViewButtonColumn RestartSS;
         private System.Windows.Forms.DataGridViewTextBoxColumn launchTimeDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewButtonColumn Start;

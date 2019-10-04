@@ -1,4 +1,58 @@
-﻿
+﻿# Web Installation Guide
+
+## Install .net core 3.0
+
+Follow this official article:
+
+https://dotnet.microsoft.com/download/linux-package-manager/ubuntu18-04/sdk-current
+
+## Install Nginx(Ubuntu)
+
+```
+sudo apt-get update
+sudo apt-get install nginx
+```
+
+Modify the default web settings.
+
+```
+sudo vim /etc/nginx/sites-available/default
+```
+
+Input the following to the above file.
+```
+server {
+    listen        80;
+    server_name   *.example.com;
+    location / {
+        proxy_pass         http://localhost:5000;
+        proxy_http_version 1.1;
+        proxy_set_header   Upgrade $http_upgrade;
+        proxy_set_header   Connection keep-alive;
+        proxy_set_header   Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header   X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   X-Forwarded-Proto $scheme;
+    }
+}
+```
+
+Retart nginx.
+```
+sudo systemctl restart nginx
+```
+
+
+## Install this Application(Ubuntu)
+
+It is simple, just copy and unzip this application and run the following.
+
+```
+nohup dotnet VpnDiy.Web.dll
+```
+
+I tried many means, this way, we can start the web under the current user instead of **www-data**.
+
 
 
 Reference:
@@ -7,63 +61,4 @@ https://docs.microsoft.com/en-us/aspnet/core/host-and-deploy/linux-nginx?view=as
 
 https://www.nginx.com/resources/wiki/start/topics/tutorials/install/#official-debian-ubuntu-packages
 
-
-<Directory /var/www//>
-        Options Indexes MultiViews
-        AllowOverride None
-        Require all granted
-</Directory>
-
-```xml
-<VirtualHost *:*>
-    RequestHeader set "X-Forwarded-Proto" expr=%{REQUEST_SCHEME}
-</VirtualHost>
-
-<VirtualHost *:81>
-    ProxyPreserveHost On
-    ProxyPass / http://127.0.0.1:5000/
-    ProxyPassReverse / http://127.0.0.1:5000/
-    ServerName sufan_news.tvshowwords.com
-    ServerAlias *.tvshowwords.com
-    ErrorLog ${APACHE_LOG_DIR}helloapp-error.log
-    CustomLog ${APACHE_LOG_DIR}helloapp-access.log common
-</VirtualHost>
-```
-
-
-```
-sudo vim /etc/systemd/system/kestrel-vpndiy.service
-```
-
-```
-[Unit]
-Description=Example .NET Web API App running on Ubuntu
-
-[Service]
-WorkingDirectory=/var/www/VpnDiy
-ExecStart=/usr/bin/dotnet /var/www/VpnDiy/VpnDiy.Web.dll
-Restart=always
-# Restart service after 10 seconds if the dotnet service crashes:
-RestartSec=10
-KillSignal=SIGINT
-SyslogIdentifier=dotnet-example
-User=www-data
-Environment=ASPNETCORE_ENVIRONMENT=Development
-Environment=DOTNET_PRINT_TELEMETRY_MESSAGE=false
-
-[Install]
-WantedBy=multi-user.target
-```
-
-Production
-
-
-```
-sudo systemctl enable kestrel-vpndiy.service
-```
-
-
-```
-sudo systemctl start kestrel-vpndiy.service
-sudo systemctl status kestrel-vpndiy.service
-```
+https://serverfault.com/questions/424452/nginx-enable-site-command

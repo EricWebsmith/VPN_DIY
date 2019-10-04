@@ -8,7 +8,6 @@ namespace VpnDiy
 {
     public static class AwsCommandUtility
     {
-
         public static string Ssh(string publicDns)
         {
             ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -47,6 +46,21 @@ namespace VpnDiy
             startInfo.UseShellExecute = false;
             startInfo.RedirectStandardOutput = true;
             startInfo.FileName = "aws";
+            startInfo.Arguments = arguments;
+            startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+            startInfo.CreateNoWindow = true;
+            Process p = Process.Start(startInfo);
+            StreamReader sr = p.StandardOutput;
+            string output = sr.ReadToEnd();
+            return output;
+        }
+
+        public static string Call(string filename, string arguments)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = false;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.FileName = filename;
             startInfo.Arguments = arguments;
             startInfo.WindowStyle = ProcessWindowStyle.Hidden;
             startInfo.CreateNoWindow = true;
